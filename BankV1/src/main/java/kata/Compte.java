@@ -5,25 +5,22 @@ import java.util.List;
 
 public class Compte {
 
-    long solde;
-
+    Monnaie solde;
     List<Transaction> transactions = new ArrayList<>();
     Historique historique;
 
     public Compte(double solde) {
-
-        this.solde = Math.round(solde*100.00);
+        this.solde = new Monnaie(solde);
         historique = new Historique(transactions, solde);
-
     }
 
     public double getSolde() {
-        return this.solde/100.0;
+        return this.solde.monnaieToDouble();
     }
 
     public void depose(double depot) {
         if (depot >= 0.01) {
-            this.solde = Math.round((getSolde() + depot) * 100.00);
+            this.solde = new Monnaie(depot);
             Transaction transaction = new Transaction(TypeTransac.DEPOT, depot);
             transactions.add(transaction);
         }
