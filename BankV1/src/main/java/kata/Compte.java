@@ -5,22 +5,23 @@ import java.util.List;
 
 public class Compte {
 
-    Monnaie solde;
+    long solde;
+    Monnaie soldeM;
     List<Transaction> transactions = new ArrayList<>();
     Historique historique;
 
     public Compte(double solde) {
-        this.solde = new Monnaie(solde);
+        this.soldeM = new Monnaie(solde);
         historique = new Historique(transactions, solde);
     }
 
     public double getSolde() {
-        return this.solde.monnaieToDouble();
+        return soldeM.monnaieToDouble(soldeM.getMontant());
     }
 
     public void depose(double depot) {
         if (depot >= 0.01) {
-            this.solde = new Monnaie(depot);
+            this.soldeM.setMontant(soldeM.plus(soldeM.doubleToMonnaie(getSolde()),soldeM.doubleToMonnaie(depot)));
             Transaction transaction = new Transaction(TypeTransac.DEPOT, depot);
             transactions.add(transaction);
         }
@@ -29,6 +30,7 @@ public class Compte {
     public void retire(double retrait) {
         if ((Math.round((getSolde() - retrait) * 100)) >= 0) {
             this.solde = Math.round((getSolde() - retrait) * 100);
+            this.soldeM.setMontant(soldeM.plus(soldeM.doubleToMonnaie(getSolde()),soldeM.doubleToMonnaie(soldeM.reverse(retrait))));
             Transaction transaction = new Transaction(TypeTransac.RETRAIT, -retrait);
             transactions.add(transaction);
         }

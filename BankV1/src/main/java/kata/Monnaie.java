@@ -1,7 +1,7 @@
 package kata;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Objects;
 
 public class Monnaie {
 
@@ -16,14 +16,40 @@ public class Monnaie {
         this.montant = BigInteger.valueOf(Math.round(solde*100.00));
         return this.montant;
     }
-    public double monnaieToDouble() {
-        double somme = Double.parseDouble(String.valueOf(this.montant))/Double.parseDouble(String.valueOf(100));
+    public double monnaieToDouble(BigInteger solde) {
+        double somme = Double.parseDouble(String.valueOf(solde))/Double.parseDouble(String.valueOf(100));
         return somme;
     }
-
-    public long getMontant() {
+    public BigInteger getMontant() {
         //TODO
-        return 0;
+        return this.montant;
+    }
+
+    public void setMontant(BigInteger montant) {
+        this.montant = montant;
+    }
+
+    public double reverse(double montant) {
+        return -montant;
+    }
+    public BigInteger reverse() {
+        return this.montant.negate();
+    }
+    public BigInteger plus (BigInteger bIntA, BigInteger bIntB) {
+        return bIntA.add(bIntB);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Monnaie monnaie = (Monnaie) o;
+        return Objects.equals(montant, monnaie.montant) && Objects.equals(devise, monnaie.devise);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(montant, devise);
     }
 
     //TODO

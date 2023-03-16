@@ -1,16 +1,17 @@
 package kata;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public class Historique {
 
     private final List<Transaction> transactions;
-    private final long soldeInitial;
+    private final Monnaie soldeInitial;
     private long soldeFinal;
 
     public Historique(List<Transaction> transactions, double soldeInitial) {
         this.transactions = transactions;
-        this.soldeInitial = Math.round(soldeInitial*100.00);
+        this.soldeInitial = new Monnaie(soldeInitial);
 
     }
 
@@ -19,20 +20,31 @@ public class Historique {
     }
 
     public double getSoldeInitial() {
-        return this.soldeInitial/100;
+        return soldeInitial.monnaieToDouble(this.soldeInitial.getMontant());
     }
 
     public double getSoldeFinal() {
-        long solde = this.soldeInitial;
+        Monnaie solde = this.soldeInitial;
         for (Transaction t:this.getTransactions()) {
-            long montant = switch (t.type) {
-                case DEPOT-> t.montant;
-                case RETRAIT-> -t.montant;
-                default-> 0;
+            BigInteger montant = switch (t.type) {
+                case DEPOT-> t.montant.getMontant();
+                case RETRAIT-> t.montant.reverse() ;
+                default-> BigInteger.valueOf(0);
             };
-            solde+= t.montant;
+            BigInteger a = BigInteger.valueOf(2);
+            BigInteger b = a.negate();
+
+            BigInteger sum = a.add(b);
+            System.out.println("sum      " + sum);
+            System.out.println("a      " + a);
+            System.out.println("b      " + b);
+
+            System.out.println("montant" + montant);
+            solde.setMontant(solde.plus(solde.getMontant(),montant));
+            System.out.println("solde " + solde.getMontant());
+
         }
 
-        return solde/100;
+        return solde.monnaieToDouble(solde.getMontant());
     }
 }

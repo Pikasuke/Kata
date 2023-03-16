@@ -5,24 +5,25 @@ import java.util.Objects;
 public class Transaction {
     public TypeTransac type;
 
-    public long montant;
+    public Monnaie montant;
 
     public Transaction(TypeTransac type, double montant) {
         this.type = type;
-        this.montant = Math.round(montant*100);
+        this.montant = new Monnaie(montant);
     }
 
     public Transaction() {
     }
     public double getMontant() {
-        return montant/100;
+        return montant.monnaieToDouble(montant.getMontant());
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
-        return Double.compare(that.montant, montant) == 0 && Objects.equals(type, that.type);
+        return type == that.type && Objects.equals(montant, that.montant);
     }
 
     @Override
