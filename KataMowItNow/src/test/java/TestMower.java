@@ -1,10 +1,8 @@
-import org.Garden;
-import org.Mower;
+import com.Garden;
+import com.Mower;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.lang.reflect.Field;
 
 public class TestMower {
 
@@ -24,12 +22,16 @@ public class TestMower {
     public void aMowerFowardItsCoordinateUpdate() {
         mower.foward();
         Assertions.assertEquals(2, mower.getY());
+        mower.setOrientation("S");
+        mower.foward();
+        Assertions.assertEquals(1, mower.getY());
         mower.setOrientation("E");
         mower.foward();
         Assertions.assertEquals(2, mower.getX());
         mower.setOrientation("W");
         mower.foward();
         Assertions.assertEquals(1, mower.getX());
+
     }
 
     @Test
@@ -51,6 +53,10 @@ public class TestMower {
         mower.setX(5);
         mower.foward();
         Assertions.assertEquals(5, mower.getX());
+        mower.setOrientation("W");
+        mower.setX(0);
+        mower.foward();
+        Assertions.assertEquals(0, mower.getX());
     }
 
     @Test
@@ -68,9 +74,14 @@ public class TestMower {
     }
 
     @Test
+    public void afterReceivedOneInstructionsMowerGivesItsPosition() {
+        String result = mower.execute("A");
+        Assertions.assertEquals("1 2 N ", result);
+    }
+    @Test
     public void afterReceivedInstructionsMowerGivesItsPosition() {
         String result = mower.execute("GAGAGAGAA");
-        Assertions.assertEquals("1 2 N", result);
+        Assertions.assertEquals("1 2 N ", result);
     }
 
     @Test

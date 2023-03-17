@@ -1,4 +1,4 @@
-package org;
+package com;
 
 public class Garden {
 
