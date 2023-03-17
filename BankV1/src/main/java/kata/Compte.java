@@ -16,22 +16,22 @@ public class Compte {
     }
 
     public double getSolde() {
-        return soldeM.monnaieToDouble(soldeM.getMontant());
+        return soldeM.monnaieToDouble(soldeM.getCentimes());
     }
 
-    public void depose(double depot) {
-        if (depot >= 0.01) {
-            this.soldeM.setMontant(soldeM.plus(soldeM.doubleToMonnaie(getSolde()),soldeM.doubleToMonnaie(depot)));
-            Transaction transaction = new Transaction(TypeTransac.DEPOT, depot);
+    public void depose(double montant) {
+        if (montant >= 0.01) {
+            this.soldeM.ajoute(new Monnaie(montant));
+            Transaction transaction = new Transaction(TypeTransac.DEPOT, montant);
             transactions.add(transaction);
         }
     }
 
-    public void retire(double retrait) {
-        if ((Math.round((getSolde() - retrait) * 100)) >= 0) {
-            this.solde = Math.round((getSolde() - retrait) * 100);
-            this.soldeM.setMontant(soldeM.plus(soldeM.doubleToMonnaie(getSolde()),soldeM.doubleToMonnaie(soldeM.reverse(retrait))));
-            Transaction transaction = new Transaction(TypeTransac.RETRAIT, -retrait);
+    public void retire(double montant) {
+        if ((Math.round((getSolde() - montant) * 100)) >= 0) {
+            this.solde = Math.round((getSolde() - montant) * 100);
+            this.soldeM.ajoute(new Monnaie(-montant));
+                    Transaction transaction = new Transaction(TypeTransac.RETRAIT, montant);
             transactions.add(transaction);
         }
     }

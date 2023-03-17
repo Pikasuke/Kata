@@ -31,10 +31,10 @@ public class TestTransaction {
         List<Transaction> transactions = List.of(new Transaction(TypeTransac.DEPOT, 1000.00));
         Assertions.assertEquals(transactions, historiqueDuCompte.getTransactions());
     }
-    @Test void unRetraitCreerUneTransation() {
+    @Test void unRetraitCreerUneTransaction() {
         compte.retire(10.00);
         Historique historiqueDuCompte = compte.getHistorique();
-        List<Transaction> transactions = List.of(new Transaction(TypeTransac.RETRAIT, -10.00));
+        List<Transaction> transactions = List.of(new Transaction(TypeTransac.RETRAIT, 10.00));
         Assertions.assertEquals(transactions, historiqueDuCompte.getTransactions());
     }
 

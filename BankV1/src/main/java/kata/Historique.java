@@ -1,6 +1,5 @@
 package kata;
 
-import java.math.BigInteger;
 import java.util.List;
 
 public class Historique {
@@ -20,31 +19,20 @@ public class Historique {
     }
 
     public double getSoldeInitial() {
-        return soldeInitial.monnaieToDouble(this.soldeInitial.getMontant());
+        return soldeInitial.monnaieToDouble(this.soldeInitial.getCentimes());
     }
 
     public double getSoldeFinal() {
         Monnaie solde = this.soldeInitial;
         for (Transaction t:this.getTransactions()) {
-            BigInteger montant = switch (t.type) {
-                case DEPOT-> t.montant.getMontant();
-                case RETRAIT-> t.montant.reverse() ;
-                default-> BigInteger.valueOf(0);
-            };
-            BigInteger a = BigInteger.valueOf(2);
-            BigInteger b = a.negate();
-
-            BigInteger sum = a.add(b);
-            System.out.println("sum      " + sum);
-            System.out.println("a      " + a);
-            System.out.println("b      " + b);
-
-            System.out.println("montant" + montant);
-            solde.setMontant(solde.plus(solde.getMontant(),montant));
-            System.out.println("solde " + solde.getMontant());
-
+            Monnaie monnaie;
+            if (t.type.equals(TypeTransac.RETRAIT)) {
+                monnaie = t.montant.oppose();
+            } else {
+                monnaie = new Monnaie(t.montant);
+            }
+            solde.ajoute(monnaie);
         }
-
-        return solde.monnaieToDouble(solde.getMontant());
+        return solde.monnaieToDouble(solde.getCentimes());
     }
 }

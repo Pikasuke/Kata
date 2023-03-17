@@ -15,7 +15,7 @@ public class Transaction {
     public Transaction() {
     }
     public double getMontant() {
-        return montant.monnaieToDouble(montant.getMontant());
+        return montant.monnaieToDouble(montant.getCentimes());
     }
 
     @Override

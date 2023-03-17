@@ -1,42 +1,50 @@
 package kata;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Objects;
 
 public class Monnaie {
 
-    private BigInteger montant;
+    private long centimes;
     private String devise;
 
-    public Monnaie(double solde) {
-        this.montant = BigInteger.valueOf(Math.round(solde*100.00));
+    public Monnaie(double montant) {
+
+        this.centimes = (Math.round(montant*100.00));
     }
 
-    public BigInteger doubleToMonnaie(double solde) {
-        this.montant = BigInteger.valueOf(Math.round(solde*100.00));
-        return this.montant;
+    public Monnaie(long centimes) {
+        this.centimes = centimes;
     }
-    public double monnaieToDouble(BigInteger solde) {
+
+    public Monnaie (Monnaie monnaie) {
+        this.centimes = monnaie.getCentimes();
+    }
+    public Monnaie oppose() {
+        return new Monnaie(this.centimes *(-1));
+    }
+    public void oppose2() {
+        this.centimes = this.centimes *(-1);
+    }
+    public void setCentimes(double solde) {
+        this.centimes = (Math.round(solde*100.00));
+    }
+    public double monnaieToDouble(long solde) {
         double somme = Double.parseDouble(String.valueOf(solde))/Double.parseDouble(String.valueOf(100));
         return somme;
     }
-    public BigInteger getMontant() {
-        //TODO
-        return this.montant;
+    public long getCentimes() {
+        return this.centimes;
     }
 
-    public void setMontant(BigInteger montant) {
-        this.montant = montant;
+    public void setMontant(long montant) {
+        this.centimes = montant;
     }
 
-    public double reverse(double montant) {
-        return -montant;
-    }
-    public BigInteger reverse() {
-        return this.montant.negate();
-    }
-    public BigInteger plus (BigInteger bIntA, BigInteger bIntB) {
-        return bIntA.add(bIntB);
+
+    public void ajoute(Monnaie autre) {
+        this.centimes = this.centimes + autre.getCentimes();
     }
 
     @Override
@@ -44,12 +52,12 @@ public class Monnaie {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Monnaie monnaie = (Monnaie) o;
-        return Objects.equals(montant, monnaie.montant) && Objects.equals(devise, monnaie.devise);
+        return Objects.equals(centimes, monnaie.centimes) && Objects.equals(devise, monnaie.devise);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(montant, devise);
+        return Objects.hash(centimes, devise);
     }
 
     //TODO

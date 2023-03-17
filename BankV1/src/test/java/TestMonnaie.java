@@ -16,6 +16,6 @@ public class TestMonnaie {
     @Test
     public void laDonneesEstStockeEnMonnaie() {
         Monnaie monnaie = new Monnaie(4807.00);
-        Assertions.assertEquals(monnaie.monnaieToDouble(monnaie.getMontant()), compte.getSolde());
+        Assertions.assertEquals(monnaie.monnaieToDouble(monnaie.getCentimes()), compte.getSolde());
     }
 }

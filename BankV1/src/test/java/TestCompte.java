@@ -71,7 +71,7 @@ public class TestCompte {
     public void apresUnRetraitLHistoriqueContientLeRetrait() {
         compte.retire(10);
         Assertions.assertEquals(1,compte.getHistorique().getTransactions().size());
-        Assertions.assertEquals(-10, compte.getHistorique().getTransactions().get(0).getMontant());
+        Assertions.assertEquals(10, compte.getHistorique().getTransactions().get(0).getMontant());
     }
 
     @Test
@@ -84,8 +84,8 @@ public class TestCompte {
         double soldeFinal = compte.getSolde();
         Historique historique = compte.getHistorique();
         Assertions.assertEquals(4, historique.getTransactions().size());
-        Assertions.assertEquals(-10, historique.getTransactions().get(0).getMontant());
-        Assertions.assertEquals(-2000, historique.getTransactions().get(3).getMontant());
+        Assertions.assertEquals(10, historique.getTransactions().get(0).getMontant());
+        Assertions.assertEquals(2000, historique.getTransactions().get(3).getMontant());
     }
 
 
