@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class TestRemote {
+public class RemoteTest {
 
     @Test
     public void givenAStringToCreateNewMower() {

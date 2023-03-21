@@ -6,7 +6,7 @@ import fr.codeworks.enums.Cardinals;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class TestGarden {
+public class GardenTest {
 
     @Test
     public void ifMowerCoordinateIsOutOfBondGiveFalse() {

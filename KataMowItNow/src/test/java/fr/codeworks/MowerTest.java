@@ -4,11 +4,10 @@ import fr.codeworks.models.Garden;
 import fr.codeworks.models.Mower;
 import fr.codeworks.enums.Cardinals;
 import fr.codeworks.models.Remote;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-public class TestMower {
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+public class MowerTest {
 
     Mower mower;
 
