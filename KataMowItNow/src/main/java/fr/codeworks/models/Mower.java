@@ -1,17 +1,22 @@
-package com;
+package fr.codeworks.models;
+
+import fr.codeworks.enums.Cardinals;
 
 public class Mower {
 
     private int x;
     private int y;
-    private String orientation;
+    private Cardinals orientation;
     private Garden garden;
 
-    public Mower(int x, int y, String orientation, Garden field) {
+    public Mower(int x, int y, Cardinals orientation, Garden garden) {
         this.x = x;
         this.y = y;
         this.orientation = orientation;
-        this.garden = field;
+        this.garden = garden;
+    }
+
+    public Mower() {
     }
 
     public int getX() {
@@ -26,11 +31,11 @@ public class Mower {
     public void setY(int y) {
         this.y = y;
     }
-    public void setOrientation(String orientation) {
+    public void setOrientation(Cardinals orientation) {
         this.orientation = orientation;
     }
     public String getOrientation() {
-        return orientation;
+        return orientation.toString();
     }
 
     public Garden getGarden() {
@@ -48,49 +53,54 @@ public class Mower {
     }
 
     public void foward() {
-        if (garden.getFieldY()>getY() && this.orientation.equals("N")) {
+        if (orientation.equals(Cardinals.N) && garden.isInVerticalLimits(getY()+1)) {
             setY(getY()+1);
         }
-        if (getY()>0 && this.orientation.equals("S")) {
+        if (orientation.equals(Cardinals.S) && garden.isInVerticalLimits(getY()-1)) {
             setY(getY()-1);
         }
-        if (garden.getFieldX()> getX() && this.orientation.equals("E")) {
+        if (orientation.equals(Cardinals.E) && garden.isInHorizontalLimits(getX()+1)) {
             setX(getX()+1);
         }
-        if (getX()>0 && this.orientation.equals("W")) {
+        if (orientation.equals(Cardinals.W) && garden.isInHorizontalLimits(getX()-1)) {
             setX(getX()-1);
         }
     }
 
-    public void turn(String sens) {
-        String cardinals = "NESW";
-        int indexOfCardinals = cardinals.indexOf(orientation);
-        if (sens.equals("D")) {
-            if (!getOrientation().equals("W")) {
+    public void turn(String way) {
+        String cardinals = "";
+        for (Enum cardinal: Cardinals.values()) {
+            cardinals = cardinals+cardinal;
+        }
+        int indexOfCardinals = cardinals.indexOf(orientation.toString());
+        if (way.equals("D")) {
+            if (!getOrientation().equals(Cardinals.W.toString())) {
                 indexOfCardinals = indexOfCardinals + 1;
             } else {
                 indexOfCardinals = 0;
             }
         }
-        if (sens.equals("G")) {
-            if (!getOrientation().equals("N")) {
+        if (way.equals("G")) {
+            if (!getOrientation().equals(Cardinals.N.toString())) {
                 indexOfCardinals = indexOfCardinals - 1;
             } else {
                 indexOfCardinals = 3;
             }
         }
-        setOrientation(String.valueOf(cardinals.charAt(indexOfCardinals)));
+        setOrientation(Cardinals.valueOf(String.valueOf(cardinals.charAt(indexOfCardinals))));
     }
 
-    public String execute(String instructions) {
+    public void execute(String instructions) {
         String[] instructionsLetter = instructions.split("");
         for (String letter: instructionsLetter) {
             if(letter.equals("A")) {
-                this.foward();
+                foward();
             }
-            this.turn(letter);
+            turn(letter);
         }
-        String coordinateFinalMower = String.valueOf(this.getX())+ " " + String.valueOf(this.getY()) + " " + this.getOrientation()+ " ";
-        return coordinateFinalMower;
+    }
+
+    public void setGarden(Garden garden) {
+        this.garden = garden;
     }
 }
