@@ -107,6 +107,18 @@ public class BowlingTest {
         Assertions.assertEquals( 8*30 + 10 +(10+4) + 10 + 4,
                 BowlingCalculator.score(List.of(10,10,10,10,10,10,10,10,10,10,10,4,0)));
     }
+
+    @Test
+    public void givenElevenStrikeAnSixZeroABonusCount() {
+        Assertions.assertEquals( 8*30 + 10 +(10+6) + 10 + 6,
+                BowlingCalculator.score(List.of(10,10,10,10,10,10,10,10,10,10,10,6,0)));
+    }
+
+    @Test
+    public void givenElevenStrikeAnFiveZeroABonusCount() {
+        Assertions.assertEquals( 8*30 + 10 +(10+5) + 10 + 5,
+                BowlingCalculator.score(List.of(10,10,10,10,10,10,10,10,10,10,10,5,0)));
+    }
     @Test
     public void givenTwelveStrikeAnANineABonusCount() {
         Assertions.assertEquals( 9*30 + 10 + 10 + 9,

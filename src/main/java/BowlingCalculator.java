@@ -16,7 +16,7 @@ public class BowlingCalculator {
             addSpareBonus(nbPins);
             checkBonus(pins, i);
         }
-    return score;
+        return score;
     }
 
     private static void initScore() {
@@ -27,7 +27,7 @@ public class BowlingCalculator {
     }
 
     private static void checkBonus(List<Integer> pins, int i) {
-        if (onNewFrame() && pins.get(i)==10) {
+        if (onNewFrame() && pins.get(i) == 10) {
             strikeToCount += 2;
             nextFrame();
         } else {
@@ -41,29 +41,36 @@ public class BowlingCalculator {
     private static void addScore(int pins) {
         score += pins;
     }
+
     private static void addSpareBonus(int pins) {
-        if(halfFrame < 19) {
+        if (halfFrame < 19) {
             if (spareToCount) {
                 addScore(pins);
                 spareToCount = false;
             }
         }
     }
+
     private static void addStrikeBonus(int pins, int i, List<Integer> pinsList) {
-        if (strikeToCount > 0 ) {
+        boolean lastShoot = false;
+        if (strikeToCount > 0) {
             if (halfFrame < 18) {
                 if (strikeToCount > 2) addScore(pins);
                 addScore(pins);
                 strikeToCount--;
+            } else if (halfFrame > 24) {
+                strikeToCount = 0;
+                score -= pinsList.get(i);
+            } else if (halfFrame >= 20 && halfFrame < 24) {
+                strikeToCount = 0;
+                addScore(pinsList.get(i));
             } else {
                 strikeToCount = 0;
-                addScore(pinsList.get(i-2));
             }
         }
-
     }
 
-    private static void continueFrame() {
+        private static void continueFrame() {
         halfFrame +=1;
     }
 
